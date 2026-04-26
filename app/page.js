@@ -9,7 +9,7 @@ const RED_DARK = '#a01818';
 const CREAM = '#faf8f5';
 const GOLD = '#c9a227';
 
-const WA_NUMBER = '26771234567'; // placeholder - replace with real number
+const WA_NUMBER = '26774448102';
 const WA_MESSAGE = encodeURIComponent("Hi, I'd like to get an insurance quote from Alfa First Projects.");
 const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
@@ -70,12 +70,6 @@ const SERVICES = [
   },
 ];
 
-const STATS = [
-  { value: '15+', label: 'Years of Experience' },
-  { value: '2,000+', label: 'Clients Protected' },
-  { value: 'NBFIRA', label: 'Licensed & Regulated' },
-  { value: '24hr', label: 'Quote Turnaround' },
-];
 
 const WHY = [
   { icon: Shield, title: 'Independent Brokers', desc: 'We work for YOU — not the insurers. Our advice is always in your best interest.' },
@@ -89,7 +83,7 @@ export default function AlfaFirstPage() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [expandedService, setExpandedService] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', provider: '', message: '' });
   const [activeTab, setActiveTab] = useState('all');
   const heroRef = useRef(null);
 
@@ -116,7 +110,7 @@ export default function AlfaFirstPage() {
 
       .in-view { opacity:1 !important; }
 
-      .scroll-reveal { opacity:0; transform:translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+      .scroll-reveal { opacity:1; transform:translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
       .scroll-reveal.visible { opacity:1; transform:translateY(0); }
 
       .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(26,31,94,0.14); }
@@ -160,11 +154,11 @@ export default function AlfaFirstPage() {
   const handleQuoteSubmit = (e) => {
     e.preventDefault();
     const msg = encodeURIComponent(
-      `Hi, I'd like an insurance quote!\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service || 'General enquiry'}\nMessage: ${form.message}`
+      `Hi, I'd like an insurance quote!\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service || 'General enquiry'}\nPreferred Provider: ${form.provider || 'No preference'}\nMessage: ${form.message}`
     );
     window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
     setQuoteOpen(false);
-    setForm({ name: '', phone: '', email: '', service: '', message: '' });
+    setForm({ name: '', phone: '', email: '', service: '', provider: '', message: '' });
   };
 
   const filteredServices = activeTab === 'all'
@@ -172,7 +166,7 @@ export default function AlfaFirstPage() {
     : SERVICES.filter(s => s.short.toLowerCase().includes(activeTab));
 
   return (
-    <div style={{ background: '#ffffff', overflowX: 'hidden', fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ background: '#ffffff', fontFamily: "'DM Sans', sans-serif" }}>
 
       {/* ── Quote Modal ── */}
       {quoteOpen && (
@@ -191,7 +185,7 @@ export default function AlfaFirstPage() {
             <form onSubmit={handleQuoteSubmit} style={{ padding:'28px', display:'flex', flexDirection:'column', gap:16 }}>
               {[
                 { label:'Full Name *', id:'name', type:'text', placeholder:'John Doe', required:true },
-                { label:'Phone Number *', id:'phone', type:'tel', placeholder:'+267 XX XXX XXX', required:true },
+                { label:'Phone Number *', id:'phone', type:'tel', placeholder:'+267 74 448 102', required:true },
                 { label:'Email Address', id:'email', type:'email', placeholder:'john@example.com' },
               ].map(f => (
                 <div key={f.id}>
@@ -211,6 +205,17 @@ export default function AlfaFirstPage() {
                   <option value="">Select a service</option>
                   {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
                   <option value="General">General Enquiry</option>
+                </select>
+              </div>
+              <div>
+                <label style={{ display:'block', fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Preferred Provider <span style={{ fontWeight:400, color:'#94a3b8' }}>(optional)</span></label>
+                <select value={form.provider} onChange={e => setForm(p => ({...p, provider: e.target.value}))}
+                  style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e2e8f0', fontSize:'0.9rem', outline:'none', fontFamily:'DM Sans, sans-serif', background:'white', boxSizing:'border-box' }}>
+                  <option value="">No preference</option>
+                  <option value="Botswana Life">Botswana Life</option>
+                  <option value="Metropolitan">Metropolitan</option>
+                  <option value="Bonna Life">Bonna Life</option>
+                  <option value="Hollard">Hollard</option>
                 </select>
               </div>
               <div>
@@ -245,11 +250,11 @@ export default function AlfaFirstPage() {
       </div>
 
       {/* ── Top Bar ── */}
-      <div style={{ background: NAVY, color: 'white', padding: '8px 16px', fontSize: '0.8rem' }}>
+      <div style={{ background: NAVY, color: 'white', padding: '8px 16px', fontSize: '0.8rem', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 51 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
           <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
-            <a href="tel:+2671234567" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Phone size={13} /> <span style={{ fontWeight: 600 }}>+267 XX XXX XXX</span>
+            <a href="tel:+26774448102" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Phone size={13} /> <span style={{ fontWeight: 600 }}>+267 74 448 102</span>
             </a>
             <a href="mailto:info@alfafirstprojects.co.bw" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
               <Mail size={13} /> <span style={{ fontWeight: 600 }}>info@alfafirstprojects.co.bw</span>
@@ -266,7 +271,7 @@ export default function AlfaFirstPage() {
       </div>
 
       {/* ── Navigation ── */}
-      <header style={{ background: 'white', borderBottom: '1px solid rgba(26,31,94,0.08)', position: 'sticky', top: 0, zIndex: 50, boxShadow: scrolled ? '0 4px 24px rgba(26,31,94,0.1)' : 'none', transition: 'box-shadow 0.3s' }}>
+      <header style={{ background: 'white', borderBottom: '1px solid rgba(26,31,94,0.08)', position: 'fixed', top: 37, left: 0, right: 0, zIndex: 50, boxShadow: scrolled ? '0 4px 24px rgba(26,31,94,0.1)' : 'none', transition: 'box-shadow 0.3s' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 72 }}>
           {/* Logo text (replace with <img> when you have the file) */}
           <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
@@ -320,7 +325,6 @@ export default function AlfaFirstPage() {
           .hidden-mobile { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
           .hero-grid { grid-template-columns: 1fr !important; }
-          .stats-grid { grid-template-columns: 1fr 1fr !important; }
           .services-grid { grid-template-columns: 1fr !important; }
           .why-grid { grid-template-columns: 1fr 1fr !important; }
           .footer-grid { grid-template-columns: 1fr !important; }
@@ -328,12 +332,11 @@ export default function AlfaFirstPage() {
         }
         @media (max-width: 480px) {
           .why-grid { grid-template-columns: 1fr !important; }
-          .stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
 
       {/* ══════════════════ HERO ══════════════════ */}
-      <section id="home" ref={heroRef} style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #141850 60%, #1a1f5e 100%)`, minHeight: '88vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
+      <section id="home" ref={heroRef} style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #141850 60%, #1a1f5e 100%)`, minHeight: '88vh', paddingTop: 109, display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
 
         {/* Background pattern */}
         <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: `repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)`, backgroundSize: '30px 30px' }} />
@@ -405,7 +408,7 @@ export default function AlfaFirstPage() {
                   style={{ background: '#25D366', color: 'white', borderRadius: 10, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', fontWeight: 700, fontSize: '0.88rem' }}>
                   <WhatsAppIcon size={20} /> WhatsApp Us
                 </a>
-                <a href="tel:+2671234567"
+                <a href="tel:+26774448102"
                   style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: 'white', borderRadius: 10, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', fontWeight: 600, fontSize: '0.88rem' }}>
                   <Phone size={16} /> Call Now
                 </a>
@@ -420,20 +423,6 @@ export default function AlfaFirstPage() {
           <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', display: 'block' }} preserveAspectRatio="none">
             <path d="M0 80L1440 80L1440 20C1200 60 960 80 720 70C480 60 240 20 0 40L0 80Z" fill="white"/>
           </svg>
-        </div>
-      </section>
-
-      {/* ══════════════════ STATS BAR ══════════════════ */}
-      <section style={{ background: 'white', paddingBottom: 48 }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
-          <div className="stats-grid scroll-reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'rgba(26,31,94,0.08)', borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(26,31,94,0.1)' }}>
-            {STATS.map((s, i) => (
-              <div key={i} style={{ background: 'white', padding: '28px 24px', textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', fontWeight: 700, color: i % 2 === 0 ? NAVY : RED, lineHeight: 1 }}>{s.value}</div>
-                <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 500, marginTop: 6, letterSpacing: '0.04em' }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -604,7 +593,7 @@ export default function AlfaFirstPage() {
             {/* Info */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {[
-                { icon: Phone, label: 'Phone / WhatsApp', value: '+267 XX XXX XXX', href: 'tel:+2671234567', note: 'Mon–Fri, 8am–5pm' },
+                { icon: Phone, label: 'Phone / WhatsApp', value: '+267 74 448 102', href: 'tel:+26774448102', note: 'Mon–Fri, 8am–5pm' },
                 { icon: Mail, label: 'Email', value: 'info@alfafirstprojects.co.bw', href: 'mailto:info@alfafirstprojects.co.bw', note: 'We reply within 24 hours' },
                 { icon: MapPin, label: 'Location', value: 'Gaborone, Botswana', href: '#', note: 'Serving clients nationwide' },
               ].map(c => {
@@ -641,7 +630,7 @@ export default function AlfaFirstPage() {
 
               <form onSubmit={handleQuoteSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  {[{id:'name',label:'Name *',type:'text',placeholder:'John Doe',required:true},{id:'phone',label:'Phone *',type:'tel',placeholder:'+267 XX XXX XXX',required:true}].map(f => (
+                  {[{id:'name',label:'Name *',type:'text',placeholder:'John Doe',required:true},{id:'phone',label:'Phone *',type:'tel',placeholder:'+267 74 448 102',required:true}].map(f => (
                     <div key={f.id}>
                       <label style={{ display:'block', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:5 }}>{f.label}</label>
                       <input type={f.type} required={f.required} placeholder={f.placeholder} value={form[f.id]}
@@ -666,6 +655,17 @@ export default function AlfaFirstPage() {
                     style={{ width:'100%', padding:'10px 12px', borderRadius:7, border:'1.5px solid #e2e8f0', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', background:'white', boxSizing:'border-box' }}>
                     <option value="">Select service</option>
                     {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display:'block', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:5 }}>Preferred Provider <span style={{ fontWeight:400, color:'#94a3b8' }}>(optional)</span></label>
+                  <select value={form.provider} onChange={e => setForm(p => ({...p, provider: e.target.value}))}
+                    style={{ width:'100%', padding:'10px 12px', borderRadius:7, border:'1.5px solid #e2e8f0', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', background:'white', boxSizing:'border-box' }}>
+                    <option value="">No preference</option>
+                    <option value="Botswana Life">Botswana Life</option>
+                    <option value="Metropolitan">Metropolitan</option>
+                    <option value="Bonna Life">Bonna Life</option>
+                    <option value="Hollard">Hollard</option>
                   </select>
                 </div>
                 <div>
@@ -729,8 +729,8 @@ export default function AlfaFirstPage() {
             <div>
               <h4 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: RED, marginBottom: 20 }}>Contact</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <a href="tel:+2671234567" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <Phone size={13} style={{ color: RED }} /> +267 XX XXX XXX
+                <a href="tel:+26774448102" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Phone size={13} style={{ color: RED }} /> +267 74 448 102
                 </a>
                 <a href="mailto:info@alfafirstprojects.co.bw" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
                   <Mail size={13} style={{ color: RED }} /> info@alfafirstprojects.co.bw
