@@ -66,7 +66,6 @@ export default function AlfaFirstPage() {
       @keyframes slideRight { from { opacity:0; transform:translateX(-20px); } to { opacity:1; transform:translateX(0); } }
       @keyframes pulse-ring { 0% { transform:scale(1); opacity:0.6; } 100% { transform:scale(1.6); opacity:0; } }
       @keyframes heroLine { from { width:0; } to { width:48px; } }
-      @keyframes panelSlide { from { opacity:0; transform:translateX(32px); } to { opacity:1; transform:translateX(0); } }
 
       .hero-badge    { animation: fadeIn 0.5s ease 0s both; }
       .hero-eyebrow  { animation: slideRight 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s both; }
@@ -75,7 +74,6 @@ export default function AlfaFirstPage() {
       .hero-copy     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s both; }
       .hero-ctas     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.55s both; }
       .hero-trust    { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
-      .hero-panel    { animation: panelSlide 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s both; }
 
       .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(26,31,94,0.14); }
       .service-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
@@ -282,17 +280,15 @@ export default function AlfaFirstPage() {
           .footer-grid { grid-template-columns: 1fr !important; }
           .contact-grid { grid-template-columns: 1fr !important; }
           .about-grid { grid-template-columns: 1fr !important; }
-          .hero-inner { grid-template-columns: 1fr !important; }
-          .hero-right-panel { display: none !important; }
         }
         @media (max-width: 480px) {
           .why-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
-      {/* ══════════════════ HERO — left-aligned split layout ══════════════════ */}
+      {/* ══════════════════ HERO — full-width, lightened overlay, no right panel ══════════════════ */}
       <section id="home" style={{
-        background: `linear-gradient(150deg, ${NAVY} 0%, #141850 60%, #1c2268 100%)`,
+        background: `linear-gradient(150deg, ${NAVY}66 0%, #14185044 45%, #1c226822 75%, #1c226811 100%), url('/shutterstock_Multi-Generational-Family.jpg') center 20%/cover no-repeat`,
         minHeight: '82vh',
         paddingTop: topBarHeight + 72,
         display: 'flex',
@@ -309,28 +305,22 @@ export default function AlfaFirstPage() {
         {/* Subtle bottom accent */}
         <div style={{ position:'absolute', bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg, transparent, ${RED}50, transparent)` }} />
 
-        <div className="hero-inner" style={{ maxWidth:1200, margin:'0 auto', padding:'72px 24px 80px', width:'100%', display:'grid', gridTemplateColumns:'1fr 420px', gap:64, alignItems:'center', position:'relative', zIndex:1 }}>
+        <div style={{ maxWidth:1200, margin:'0 auto', padding:'120px 24px 80px', width:'100%', position:'relative', zIndex:1 }}>
 
-          {/* ── Left: text ── */}
-          <div>
-            {/* Eyebrow */}
-            <div className="hero-badge" style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${RED}1a`, border:`1px solid ${RED}40`, borderRadius:40, padding:'6px 16px', marginBottom:28 }}>
-              <div style={{ width:6, height:6, borderRadius:'50%', background:RED }} />
-              <span style={{ color:RED, fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase' }}>NBFIRA Licensed · Gaborone, Botswana</span>
-            </div>
-
-            {/* Headline — left-aligned, tighter */}
-            <h1 className="hero-headline" style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(3rem, 6vw, 5.2rem)', fontWeight:700, color:'white', lineHeight:0.95, letterSpacing:'-0.02em', margin:'0 0 20px' }}>
-              Your Insurance.<br />
-              <em style={{ color:RED, fontStyle:'italic' }}>Our Priority.</em>
+          {/* ── Text content — full width ── */}
+          <div style={{ maxWidth: 700 }}>
+            {/* Headline */}
+            <h1 className="hero-headline" style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2.8rem, 6vw, 5.4rem)', fontWeight:700, color:'white', lineHeight:1.0, letterSpacing:'-0.01em', margin:'0 0 20px', textShadow:'0 2px 16px rgba(0,0,0,0.5)' }}>
+              Your Insurance.{' '}
+              <br />
+              <em style={{ color:'#ff3333', fontStyle:'italic', textShadow:'0 1px 12px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.6)' }}>
+                Our Priority.
+              </em>
             </h1>
 
-            {/* Ruled line */}
-            <div className="hero-rule" style={{ height:3, background:`linear-gradient(90deg, ${RED}, ${GOLD})`, borderRadius:2, marginBottom:22, display:'block', width:48 }} />
-
-            {/* Copy — shorter, left-aligned */}
-            <p className="hero-copy" style={{ color:'rgba(255,255,255,0.68)', fontSize:'1rem', lineHeight:1.75, margin:'0 0 32px', maxWidth:'46ch' }}>
-              Gaborone's trusted independent insurance agency. We search the full Botswana market to find you the right cover — long term and short term — at the best price.
+            {/* Copy — short & punchy */}
+            <p className="hero-copy" style={{ color:'rgba(255,255,255,0.95)', fontSize:'1rem', lineHeight:1.7, margin:'0 0 32px', maxWidth:'38ch', textShadow:'0 1px 8px rgba(0,0,0,0.6)' }}>
+              Gaborone's independent insurance agency — long term &amp; short term cover at the best price.
             </p>
 
             {/* CTAs */}
@@ -341,71 +331,15 @@ export default function AlfaFirstPage() {
                 onMouseLeave={e => e.currentTarget.style.transform='translateY(0)'}>
                 Get Free Quote <ArrowRight size={16} />
               </button>
-              <a href={WA_HREF} target="_blank" rel="noopener noreferrer"
-                style={{ background:'#25D366', color:'white', border:'none', padding:'13px 24px', borderRadius:9, fontWeight:700, fontSize:'0.92rem', textDecoration:'none', display:'flex', alignItems:'center', gap:8, boxShadow:'0 8px 28px rgba(37,211,102,0.35)', transition:'transform 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
-                onMouseLeave={e => e.currentTarget.style.transform='translateY(0)'}>
-                <WhatsAppIcon size={18} /> WhatsApp Us
-              </a>
               <button onClick={() => smoothScroll('services')}
-                style={{ background:'transparent', color:'rgba(255,255,255,0.75)', border:'1px solid rgba(255,255,255,0.2)', padding:'13px 24px', borderRadius:9, fontWeight:500, fontSize:'0.92rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', transition:'all 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,0.07)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.35)'; e.currentTarget.style.color='white'; }}
-                onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(255,255,255,0.2)'; e.currentTarget.style.color='rgba(255,255,255,0.75)'; }}>
+                style={{ background:'rgba(0,0,0,0.45)', color:'white', border:'1px solid rgba(255,255,255,0.4)', padding:'13px 24px', borderRadius:9, fontWeight:600, fontSize:'0.92rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', transition:'all 0.2s', backdropFilter:'blur(4px)' }}
+                onMouseEnter={e => { e.currentTarget.style.background='rgba(0,0,0,0.65)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.6)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background='rgba(0,0,0,0.45)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.4)'; }}>
                 Our Services
               </button>
             </div>
 
-            {/* Trust pills */}
-            <div className="hero-trust" style={{ display:'flex', alignItems:'center', gap:20, flexWrap:'wrap' }}>
-              {[
-                { icon: Shield, text: 'NBFIRA Licensed' },
-                { icon: Users, text: 'Independent Agency' },
-                { icon: CheckCircle, text: 'All Major Insurers' },
-              ].map(({ icon: Icon, text }, i) => (
-                <div key={i} style={{ display:'flex', alignItems:'center', gap:6, color:'rgba(255,255,255,0.5)', fontSize:'0.78rem', fontWeight:500 }}>
-                  <Icon size={12} style={{ color:`${RED}cc` }} />
-                  {text}
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* ── Right: quick-action panel ── */}
-          <div className="hero-right-panel hero-panel" style={{ background:'rgba(255,255,255,0.05)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:20, padding:'32px 28px', boxShadow:'0 24px 64px rgba(0,0,0,0.3)' }}>
-            <div style={{ fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase', color:RED, marginBottom:6 }}>Quick Quote</div>
-            <h3 style={{ fontFamily:'Cormorant Garamond, serif', color:'white', fontSize:'1.6rem', fontWeight:700, margin:'0 0 24px', lineHeight:1.1 }}>What can we<br />cover for you?</h3>
-
-            <div style={{ display:'flex', flexDirection:'column', gap:10, marginBottom:20 }}>
-              {SERVICES.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <button key={s.title}
-                    onClick={() => { setForm(p => ({...p, service: s.title})); setQuoteOpen(true); }}
-                    style={{ display:'flex', alignItems:'center', gap:12, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:10, padding:'11px 14px', cursor:'pointer', textAlign:'left', transition:'all 0.2s', fontFamily:'DM Sans, sans-serif' }}
-                    onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.22)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.1)'; }}>
-                    <div style={{ width:32, height:32, borderRadius:8, background:`${s.color}25`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                      <Icon size={15} style={{ color:s.color === RED ? '#ff6b6b' : '#8b96e0' }} />
-                    </div>
-                    <div style={{ flex:1 }}>
-                      <div style={{ color:'rgba(255,255,255,0.9)', fontSize:'0.85rem', fontWeight:600 }}>{s.title}</div>
-                      <div style={{ color:'rgba(255,255,255,0.38)', fontSize:'0.72rem' }}>{s.short}</div>
-                    </div>
-                    <ArrowRight size={13} style={{ color:'rgba(255,255,255,0.3)' }} />
-                  </button>
-                );
-              })}
-            </div>
-
-            <div style={{ borderTop:'1px solid rgba(255,255,255,0.08)', paddingTop:16, display:'flex', alignItems:'center', gap:10 }}>
-              <div style={{ width:36, height:36, borderRadius:'50%', background:'#25D36620', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                <WhatsAppIcon size={16} />
-              </div>
-              <div>
-                <div style={{ color:'rgba(255,255,255,0.9)', fontSize:'0.82rem', fontWeight:600 }}>Not sure what you need?</div>
-                <a href={WA_HREF} target="_blank" rel="noopener noreferrer" style={{ color:'#25D366', fontSize:'0.78rem', fontWeight:700, textDecoration:'none' }}>Chat with us on WhatsApp →</a>
-              </div>
-            </div>
           </div>
         </div>
 
