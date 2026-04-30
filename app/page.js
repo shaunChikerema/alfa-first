@@ -84,7 +84,7 @@ export default function AlfaFirstPage() {
 
     const style = document.createElement('style');
     style.textContent = `
-      html, body { overflow-x: hidden; max-width: 100vw; }
+      html, body { overflow-x: hidden; max-width: 100%; }
 
       @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -169,7 +169,7 @@ export default function AlfaFirstPage() {
   };
 
   return (
-    <div style={{ background: '#ffffff', fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ background: '#ffffff', fontFamily: "'DM Sans', sans-serif", overflowX: 'hidden', maxWidth: '100%' }}>
 
       <style>{`
         @media (max-width: 768px) {
@@ -180,6 +180,7 @@ export default function AlfaFirstPage() {
           .footer-grid { grid-template-columns: 1fr !important; }
           .contact-grid { grid-template-columns: 1fr !important; }
           .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .contact-form-inner-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
@@ -261,7 +262,7 @@ export default function AlfaFirstPage() {
       </div>
 
       {/* ── Top Bar ── */}
-      <div ref={topBarRef} style={{ background:NAVY, color:'white', padding:'7px 24px', fontSize:'0.8rem', position:'fixed', top:0, left:0, right:0, zIndex:51 }}>
+      <div ref={topBarRef} style={{ background:NAVY, color:'white', padding:'7px 24px', fontSize:'0.8rem', position:'fixed', top:0, left:0, right:0, zIndex:51, overflow:'hidden' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
           <div style={{ display:'flex', alignItems:'center', gap:20 }}>
             <a href="tel:+26774448102" style={{ color:'rgba(255,255,255,0.85)', textDecoration:'none', display:'flex', alignItems:'center', gap:6 }}>
@@ -279,7 +280,7 @@ export default function AlfaFirstPage() {
       </div>
 
       {/* ── Navigation ── */}
-      <header style={{ background:'white', borderBottom:'1px solid rgba(26,31,94,0.08)', position:'fixed', top:topBarHeight, left:0, right:0, zIndex:50, boxShadow:scrolled ? '0 4px 24px rgba(26,31,94,0.1)' : 'none', transition:'box-shadow 0.3s' }}>
+      <header style={{ background:'white', borderBottom:'1px solid rgba(26,31,94,0.08)', position:'fixed', top:topBarHeight, left:0, right:0, zIndex:50, boxShadow:scrolled ? '0 4px 24px rgba(26,31,94,0.1)' : 'none', transition:'box-shadow 0.3s', overflow:'hidden' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px', display:'flex', justifyContent:'space-between', alignItems:'center', height:72 }}>
           <div style={{ display:'flex', flexDirection:'column', lineHeight:1 }}>
             <span style={{ fontFamily:'Cormorant Garamond, serif', fontWeight:700, fontSize:'1.35rem', color:NAVY, letterSpacing:'0.04em', textTransform:'uppercase' }}>
@@ -338,7 +339,7 @@ export default function AlfaFirstPage() {
         overflow: 'hidden',
       }}>
         <div style={{ position:'absolute', inset:0, opacity:0.03, backgroundImage:`repeating-linear-gradient(0deg, white 0, white 1px, transparent 0, transparent 60px), repeating-linear-gradient(90deg, white 0, white 1px, transparent 0, transparent 60px)`, backgroundSize:'60px 60px' }} />
-        <div style={{ position:'absolute', top:-120, right:-80, width:480, height:480, borderRadius:'50%', background:`radial-gradient(circle, ${RED}22 0%, transparent 65%)`, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-120, right:-80, width:480, height:480, borderRadius:'50%', background:`radial-gradient(circle, ${RED}22 0%, transparent 65%)`, pointerEvents:'none', maxWidth:'100%' }} />
         <div style={{ position:'absolute', bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg, transparent, ${RED}50, transparent)` }} />
 
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'120px 24px 80px', width:'100%', position:'relative', zIndex:1 }}>
@@ -631,7 +632,7 @@ export default function AlfaFirstPage() {
               <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.6rem', fontWeight:700, color:NAVY, marginBottom:4 }}>Request a Quote</h3>
               <p style={{ color:'#94a3b8', fontSize:'0.85rem', marginBottom:28 }}>Fill in your details and we'll get back to you promptly.</p>
               <form onSubmit={handleQuoteSubmit} style={{ display:'flex', flexDirection:'column', gap:16 }}>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+                <div className="contact-form-inner-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
                   {[{id:'name',label:'Full Name *',type:'text',placeholder:'John Doe',required:true},{id:'phone',label:'Phone *',type:'tel',placeholder:'+267 744 48102',required:true}].map(f => (
                     <div key={f.id}>
                       <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>{f.label}</label>
@@ -644,7 +645,7 @@ export default function AlfaFirstPage() {
                     </div>
                   ))}
                 </div>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+                <div className="contact-form-inner-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
                   <div>
                     <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Email</label>
                     <input type="email" placeholder="john@example.com" value={form.email}
