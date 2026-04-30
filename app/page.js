@@ -28,12 +28,47 @@ const SERVICES = [
   { icon: Activity, title: 'Medical Aid', short: 'Short Term', desc: 'Access quality healthcare without worry. We find you the right medical cover at the right price.', features: ['Hospital plans', 'Day-to-day benefits', 'Chronic medication', 'Dental & optical'], color: NAVY },
 ];
 
+const PROVIDERS = [
+  {
+    name: 'Botswana Life',
+    tag: 'Est. 1975 · Market Leader',
+    desc: "Botswana's oldest and largest life insurer with 80% market share. Specialises in life cover, funeral cover, retirement annuities, investment & savings, hospital cash plans and group solutions.",
+    strengths: ['Life & funeral cover', 'Retirement annuities', 'Investment & savings', 'Group solutions'],
+    type: 'Long Term',
+    color: '#1a1f5e',
+  },
+  {
+    name: 'Metropolitan',
+    tag: '2nd Largest Life Insurer',
+    desc: "Part of Momentum Metropolitan. Offers affordable, innovative life, health and funeral products including Mothusi Life Cover, MultiCash Plan and Re-Eme-Nao Funeral Plan.",
+    strengths: ['Life & health cover', 'Funeral plans', 'Savings & retirement', 'Pension plans'],
+    type: 'Long Term',
+    color: '#006cb7',
+  },
+  {
+    name: 'Hollard',
+    tag: 'General & Life Insurance',
+    desc: "South African-backed insurer offering both general and life products. Known for motor, home, all-risks, commercial and funeral cover — plus Lerako Life Cover up to P15 million.",
+    strengths: ['Motor & home cover', 'Life & disability', 'Business insurance', 'Funeral cover'],
+    type: 'Short & Long Term',
+    color: '#e8202a',
+  },
+  {
+    name: 'Bona Life',
+    tag: '1st Citizen-Owned Insurer · Est. 2013',
+    desc: "Botswana's first indigenous, citizen-owned life insurer backed by BPOPF. Products include Group Life Assurance, Pula Cashback Plan, Thebe Funeral Cover, Lefa Life Cover and pension solutions.",
+    strengths: ['Group life assurance', 'Funeral cover', 'Pension & annuity', 'Savings plans'],
+    type: 'Long Term',
+    color: '#2e7d32',
+  },
+];
+
 export default function AlfaFirstPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [expandedService, setExpandedService] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', provider: '', message: '' });
   const [topBarHeight, setTopBarHeight] = useState(37);
   const topBarRef = useRef(null);
 
@@ -126,11 +161,11 @@ export default function AlfaFirstPage() {
   const handleQuoteSubmit = (e) => {
     e.preventDefault();
     const msg = encodeURIComponent(
-      `Hi, I'd like an insurance quote!\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service || 'General enquiry'}\nMessage: ${form.message}`
+      `Hi, I'd like an insurance quote!\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service || 'General enquiry'}\nPreferred Provider: ${form.provider || 'No preference'}\nMessage: ${form.message}`
     );
     window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
     setQuoteOpen(false);
-    setForm({ name: '', phone: '', email: '', service: '', message: '' });
+    setForm({ name: '', phone: '', email: '', service: '', provider: '', message: '' });
   };
 
   return (
@@ -184,6 +219,14 @@ export default function AlfaFirstPage() {
                   <option value="">Select a service</option>
                   {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
                   <option value="General">General Enquiry</option>
+                </select>
+              </div>
+              <div>
+                <label style={{ display:'block', fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Preferred Provider <span style={{fontWeight:400,color:'#94a3b8'}}>(optional)</span></label>
+                <select value={form.provider} onChange={e => setForm(p => ({...p, provider: e.target.value}))}
+                  style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e2e8f0', fontSize:'0.9rem', outline:'none', fontFamily:'DM Sans, sans-serif', background:'white', boxSizing:'border-box' }}>
+                  <option value="">No preference — best deal</option>
+                  {PROVIDERS.map(p => <option key={p.name} value={p.name}>{p.name} · {p.type}</option>)}
                 </select>
               </div>
               <div>
@@ -619,6 +662,14 @@ export default function AlfaFirstPage() {
                       {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
                     </select>
                   </div>
+                </div>
+                <div>
+                  <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Preferred Provider <span style={{fontWeight:400,color:'#94a3b8'}}>(optional)</span></label>
+                  <select value={form.provider} onChange={e => setForm(p => ({...p, provider: e.target.value}))}
+                    style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e8edf5', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', background:'white', boxSizing:'border-box' }}>
+                    <option value="">No preference — best deal</option>
+                    {PROVIDERS.map(p => <option key={p.name} value={p.name}>{p.name} · {p.type}</option>)}
+                  </select>
                 </div>
                 <div>
                   <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Message</label>
