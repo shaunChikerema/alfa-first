@@ -28,13 +28,6 @@ const SERVICES = [
   { icon: Activity, title: 'Medical Aid', short: 'Short Term', desc: 'Access quality healthcare without worry. We find you the right medical cover at the right price.', features: ['Hospital plans', 'Day-to-day benefits', 'Chronic medication', 'Dental & optical'], color: NAVY },
 ];
 
-const WHY = [
-  { icon: Shield, title: 'Independent Agency', desc: 'We work for YOU — not the insurers. Our advice is always in your best interest.' },
-  { icon: Users, title: 'Personal Service', desc: 'A dedicated agent who knows your name, your family, and your coverage needs.' },
-  { icon: Clock, title: 'Fast Quotes', desc: 'Get competitive quotes from multiple providers within 24 hours — hassle free.' },
-  { icon: Star, title: 'Best Market Rates', desc: 'As an independent agency we access the full market to find you the best deal.' },
-];
-
 export default function AlfaFirstPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
@@ -83,15 +76,29 @@ export default function AlfaFirstPage() {
       .scroll-reveal { opacity:0; transform:translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
       .scroll-reveal.visible { opacity:1; transform:translateY(0); }
 
-      .tab-btn.active { background: ${NAVY}; color: white; border-color: ${NAVY}; }
-      .tab-btn { transition: all 0.2s; }
-
       body { font-family: 'DM Sans', sans-serif; }
       h1,h2,h3,.display { font-family: 'Cormorant Garamond', Georgia, serif; }
 
       ::-webkit-scrollbar { width: 5px; }
       ::-webkit-scrollbar-track { background: #f1f1f1; }
       ::-webkit-scrollbar-thumb { background: ${NAVY}; border-radius: 2px; }
+
+      /* Logo — clean PNG with transparency, no background needed */
+      .alfa-logo-img {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .alfa-logo-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 8px 0 0;
+      }
     `;
     document.head.appendChild(style);
 
@@ -128,6 +135,18 @@ export default function AlfaFirstPage() {
 
   return (
     <div style={{ background: '#ffffff', fontFamily: "'DM Sans', sans-serif" }}>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .hidden-mobile { display: none !important; }
+          .topbar-email { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          .services-grid { grid-template-columns: 1fr !important; }
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .contact-grid { grid-template-columns: 1fr !important; }
+          .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
 
       {/* ── Quote Modal ── */}
       {quoteOpen && (
@@ -174,7 +193,7 @@ export default function AlfaFirstPage() {
                   style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e2e8f0', fontSize:'0.9rem', outline:'none', resize:'none', fontFamily:'DM Sans, sans-serif', boxSizing:'border-box' }}
                 />
               </div>
-              <button type="submit" style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:'14px 24px', borderRadius:10, fontSize:'0.95rem', fontWeight:700, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:8, boxShadow:`0 8px 24px ${RED}40` }}>
+              <button type="submit" style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:'14px 24px', borderRadius:10, fontSize:'0.95rem', fontWeight:700, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:8, boxShadow:`0 8px 24px ${RED}40`, fontFamily:'DM Sans, sans-serif' }}>
                 <WhatsAppIcon size={18} /> Send via WhatsApp
               </button>
               <p style={{ textAlign:'center', fontSize:'0.78rem', color:'#94a3b8', margin:0 }}>We'll respond within 24 hours during business hours</p>
@@ -265,23 +284,7 @@ export default function AlfaFirstPage() {
         )}
       </header>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .hidden-mobile { display: none !important; }
-          .topbar-email { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
-          .services-grid { grid-template-columns: 1fr !important; }
-          .why-grid { grid-template-columns: 1fr 1fr !important; }
-          .footer-grid { grid-template-columns: 1fr !important; }
-          .contact-grid { grid-template-columns: 1fr !important; }
-          .about-grid { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 480px) {
-          .why-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-
-      {/* ══════════════════ HERO — full-width, lightened overlay, no right panel ══════════════════ */}
+      {/* ══════════════════ HERO ══════════════════ */}
       <section id="home" style={{
         background: `linear-gradient(150deg, ${NAVY}66 0%, #14185044 45%, #1c226822 75%, #1c226811 100%), url('/shutterstock_Multi-Generational-Family.jpg') center 20%/cover no-repeat`,
         minHeight: '82vh',
@@ -291,20 +294,12 @@ export default function AlfaFirstPage() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-
-        {/* Subtle grid texture */}
         <div style={{ position:'absolute', inset:0, opacity:0.03, backgroundImage:`repeating-linear-gradient(0deg, white 0, white 1px, transparent 0, transparent 60px), repeating-linear-gradient(90deg, white 0, white 1px, transparent 0, transparent 60px)`, backgroundSize:'60px 60px' }} />
-
-        {/* Red glow top-right */}
         <div style={{ position:'absolute', top:-120, right:-80, width:480, height:480, borderRadius:'50%', background:`radial-gradient(circle, ${RED}22 0%, transparent 65%)`, pointerEvents:'none' }} />
-        {/* Subtle bottom accent */}
         <div style={{ position:'absolute', bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg, transparent, ${RED}50, transparent)` }} />
 
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'120px 24px 80px', width:'100%', position:'relative', zIndex:1 }}>
-
-          {/* ── Text content — full width ── */}
           <div style={{ maxWidth: 700 }}>
-            {/* Headline */}
             <h1 className="hero-headline" style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2.8rem, 6vw, 5.4rem)', fontWeight:700, color:'white', lineHeight:1.0, letterSpacing:'-0.01em', margin:'0 0 20px', textShadow:'0 2px 16px rgba(0,0,0,0.5)' }}>
               Your Insurance.{' '}
               <br />
@@ -312,13 +307,9 @@ export default function AlfaFirstPage() {
                 Our Priority.
               </em>
             </h1>
-
-            {/* Copy — short & punchy */}
             <p className="hero-copy" style={{ color:'rgba(255,255,255,0.95)', fontSize:'1rem', lineHeight:1.7, margin:'0 0 32px', maxWidth:'38ch', textShadow:'0 1px 8px rgba(0,0,0,0.6)' }}>
               Gaborone's independent insurance agency — long term &amp; short term cover at the best price.
             </p>
-
-            {/* CTAs */}
             <div className="hero-ctas" style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:40 }}>
               <button onClick={() => setQuoteOpen(true)}
                 style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:'13px 28px', borderRadius:9, fontWeight:700, fontSize:'0.92rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', boxShadow:`0 8px 28px ${RED}50`, display:'flex', alignItems:'center', gap:8, transition:'transform 0.2s' }}
@@ -333,12 +324,9 @@ export default function AlfaFirstPage() {
                 Our Services
               </button>
             </div>
-
-
           </div>
         </div>
 
-        {/* Wave bottom */}
         <div style={{ position:'absolute', bottom:-1, left:0, right:0 }}>
           <svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width:'100%', display:'block' }} preserveAspectRatio="none">
             <path d="M0 64L1440 64L1440 16C1200 48 960 64 720 56C480 48 240 16 0 32L0 64Z" fill="white"/>
@@ -349,8 +337,6 @@ export default function AlfaFirstPage() {
       {/* ══════════════════ SERVICES ══════════════════ */}
       <section id="services" style={{ background:CREAM, padding:'88px 0 100px' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px' }}>
-
-          {/* Header */}
           <div className="scroll-reveal" style={{ marginBottom:56, textAlign:'center' }}>
             <div style={{ display:'inline-block', background:`${RED}12`, border:`1px solid ${RED}30`, borderRadius:40, padding:'5px 16px', marginBottom:16 }}>
               <span style={{ color:RED, fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase' }}>What We Offer</span>
@@ -370,7 +356,6 @@ export default function AlfaFirstPage() {
               const isRed = s.color === RED;
               return (
                 <div key={s.title} className="service-card scroll-reveal" style={{ background:'white', borderRadius:16, overflow:'hidden', border:'1px solid rgba(26,31,94,0.07)', transitionDelay:`${i * 0.06}s`, display:'flex', flexDirection:'column' }}>
-                  {/* Colour band + icon */}
                   <div style={{ background: isRed ? `linear-gradient(135deg, ${RED}18, ${RED}08)` : `linear-gradient(135deg, ${NAVY}12, ${NAVY}05)`, padding:'28px 24px 20px', display:'flex', alignItems:'center', gap:16, borderBottom:`1px solid ${isRed ? RED : NAVY}10` }}>
                     <div style={{ width:52, height:52, borderRadius:14, background: isRed ? `${RED}18` : `${NAVY}14`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                       <Icon size={24} style={{ color: isRed ? RED : NAVY }} />
@@ -380,12 +365,8 @@ export default function AlfaFirstPage() {
                       <span style={{ fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color: isRed ? RED : NAVY, opacity:0.7 }}>{s.short}</span>
                     </div>
                   </div>
-
-                  {/* Body */}
                   <div style={{ padding:'20px 24px 24px', display:'flex', flexDirection:'column', flex:1 }}>
                     <p style={{ fontSize:'0.88rem', color:'#64748b', lineHeight:1.72, marginBottom:16, flex:1 }}>{s.desc}</p>
-
-                    {/* Expandable features */}
                     <div style={{ maxHeight:isExpanded ? 200 : 0, overflow:'hidden', transition:'max-height 0.4s ease', marginBottom:isExpanded ? 16 : 0 }}>
                       <div style={{ borderTop:`1px solid rgba(26,31,94,0.07)`, paddingTop:14, display:'flex', flexDirection:'column', gap:8 }}>
                         {s.features.map(f => (
@@ -398,8 +379,6 @@ export default function AlfaFirstPage() {
                         ))}
                       </div>
                     </div>
-
-                    {/* Actions */}
                     <div style={{ display:'flex', gap:8 }}>
                       <button onClick={() => setExpandedService(isExpanded ? null : s.title)}
                         style={{ flex:1, background:'none', border:`1px solid rgba(26,31,94,0.13)`, borderRadius:9, padding:'9px 14px', fontSize:'0.8rem', fontWeight:600, color:NAVY, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:5, fontFamily:'DM Sans, sans-serif', transition:'background 0.2s' }}
@@ -422,25 +401,35 @@ export default function AlfaFirstPage() {
         </div>
       </section>
 
-      {/* ══════════════════ WHY ALFA FIRST ══════════════════ */}
+      {/* ══════════════════ ABOUT ══════════════════ */}
       <section id="about" style={{ background:'white', padding:'88px 0' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px' }}>
           <div className="about-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:72, alignItems:'center' }}>
+
+            {/* LEFT — copy */}
             <div className="scroll-reveal">
               <div style={{ display:'inline-block', background:`${NAVY}0d`, border:`1px solid ${NAVY}25`, borderRadius:40, padding:'5px 16px', marginBottom:20 }}>
                 <span style={{ color:NAVY, fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase' }}>About Alfa First</span>
               </div>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 4vw, 3rem)', fontWeight:700, color:NAVY, lineHeight:1.1, marginBottom:20 }}>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 4vw, 3rem)', fontWeight:700, color:NAVY, lineHeight:1.1, marginBottom:16 }}>
                 Independent Agency<br /><em style={{ color:RED }}>Working for You</em>
               </h2>
-              <div style={{ width:48, height:3, background:`linear-gradient(90deg, ${RED}, ${GOLD})`, marginBottom:24, borderRadius:2 }} />
-              <p style={{ color:'#475569', lineHeight:1.85, marginBottom:16, fontSize:'0.95rem' }}>
+              <div style={{ width:48, height:3, background:`linear-gradient(90deg, ${RED}, ${GOLD})`, marginBottom:20, borderRadius:2 }} />
+              <p style={{ color:'#475569', lineHeight:1.85, marginBottom:14, fontSize:'0.95rem' }}>
                 Alfa First Projects is a NBFIRA-licensed insurance agency based in Gaborone, Botswana. We specialise in both long term and short term insurance solutions for individuals, families, and businesses across Botswana.
               </p>
-              <p style={{ color:'#475569', lineHeight:1.85, marginBottom:32, fontSize:'0.95rem' }}>
+              <p style={{ color:'#475569', lineHeight:1.85, marginBottom:24, fontSize:'0.95rem' }}>
                 As an independent agency, our loyalty is always to our clients — never to the insurers. We access the full Botswana insurance market to find you the right cover at the best possible price.
               </p>
-              <div style={{ display:'flex', gap:16, alignItems:'center' }}>
+
+              {/* Promise ribbon */}
+              <div style={{ borderLeft:`3px solid ${RED}`, background:`${RED}06`, padding:'12px 16px', borderRadius:'0 8px 8px 0', marginBottom:24 }}>
+                <p style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.05rem', fontStyle:'italic', color:NAVY, margin:0, lineHeight:1.65 }}>
+                  "We don't just sell policies — we build lasting protection for the people who matter most to you."
+                </p>
+              </div>
+
+              <div style={{ display:'flex', gap:16, alignItems:'center', flexWrap:'wrap', marginTop:4 }}>
                 <button onClick={() => setQuoteOpen(true)}
                   style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:'12px 24px', borderRadius:9, fontWeight:700, fontSize:'0.9rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', display:'flex', alignItems:'center', gap:8 }}>
                   Start Today <ArrowRight size={15} />
@@ -452,137 +441,197 @@ export default function AlfaFirstPage() {
               </div>
             </div>
 
-            <div className="why-grid scroll-reveal" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
-              {WHY.map((w, i) => {
-                const Icon = w.icon;
-                return (
-                  <div key={i} style={{ background:CREAM, borderRadius:12, padding:'24px 20px', border:'1px solid rgba(26,31,94,0.07)' }}>
-                    <div style={{ width:40, height:40, borderRadius:10, background:i % 2 === 0 ? `${RED}15` : `${NAVY}10`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:14 }}>
-                      <Icon size={18} style={{ color:i % 2 === 0 ? RED : NAVY }} />
-                    </div>
-                    <h4 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.05rem', fontWeight:700, color:NAVY, marginBottom:8 }}>{w.title}</h4>
-                    <p style={{ fontSize:'0.82rem', color:'#64748b', lineHeight:1.65 }}>{w.desc}</p>
-                  </div>
-                );
-              })}
+            {/* RIGHT — Logo clean, no box */}
+            <div className="scroll-reveal" style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:24 }}>
+
+              {/* Logo — no card box, clean blend */}
+              <div className="alfa-logo-wrap">
+                <img
+                  src="/alfa-logo-clean.png"
+                  alt="Alfa First Projects — The Ultimate Choice"
+                  className="alfa-logo-img"
+                />
+              </div>
+
+
+
             </div>
+
           </div>
         </div>
       </section>
 
       {/* ══════════════════ CTA BAND ══════════════════ */}
-      <section style={{ background:`linear-gradient(135deg, ${NAVY} 0%, #141850 50%, ${NAVY} 100%)`, padding:'72px 24px', position:'relative', overflow:'hidden' }}>
-        <div style={{ position:'absolute', top:-80, right:-80, width:320, height:320, borderRadius:'50%', background:`${RED}20` }} />
-        <div style={{ position:'absolute', bottom:-60, left:-60, width:240, height:240, borderRadius:'50%', background:`${RED}15` }} />
-        <div style={{ maxWidth:800, margin:'0 auto', textAlign:'center', position:'relative', zIndex:1 }}>
-          <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 5vw, 3.5rem)', fontWeight:700, color:'white', marginBottom:16 }}>
-            Ready to Get Protected?
-          </h2>
-          <p style={{ color:'rgba(255,255,255,0.72)', fontSize:'1rem', lineHeight:1.8, marginBottom:8, fontStyle:'italic' }}>
-            "The Ultimate Choice" — Alfa First Projects
-          </p>
-          <p style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.95rem', marginBottom:36 }}>
-            Get a free, no-obligation insurance quote today. We'll respond within 24 hours.
-          </p>
-          <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap' }}>
-            <button onClick={() => setQuoteOpen(true)}
-              style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:'14px 32px', borderRadius:10, fontWeight:700, fontSize:'1rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', boxShadow:`0 8px 28px ${RED}50`, display:'flex', alignItems:'center', gap:8 }}>
-              Request Free Quote <ArrowRight size={17} />
-            </button>
-            <a href={WA_HREF} target="_blank" rel="noopener noreferrer"
-              style={{ background:'#25D366', color:'white', border:'none', padding:'14px 28px', borderRadius:10, fontWeight:700, fontSize:'1rem', textDecoration:'none', display:'flex', alignItems:'center', gap:8, boxShadow:'0 8px 28px rgba(37,211,102,0.4)' }}>
-              <WhatsAppIcon size={18} /> WhatsApp Us
-            </a>
+      <section style={{ position:'relative', overflow:'hidden', padding:'0' }}>
+        {/* Split: left red, right navy */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', minHeight:280 }} className="cta-split">
+          <div style={{ background:`linear-gradient(135deg, ${RED_DARK}, ${RED})`, padding:'64px 48px 64px 48px', display:'flex', flexDirection:'column', justifyContent:'center', position:'relative', overflow:'hidden' }}>
+            <div style={{ position:'absolute', top:-40, left:-40, width:200, height:200, borderRadius:'50%', background:'rgba(255,255,255,0.06)' }} />
+            <div style={{ position:'absolute', bottom:-20, right:20, width:120, height:120, borderRadius:'50%', background:'rgba(255,255,255,0.04)' }} />
+            <div style={{ position:'relative', zIndex:1 }}>
+              <div style={{ fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(255,255,255,0.7)', marginBottom:12 }}>Free Consultation</div>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight:700, color:'white', lineHeight:1.1, margin:'0 0 16px' }}>
+                Ready to Get<br />Protected?
+              </h2>
+              <p style={{ color:'rgba(255,255,255,0.8)', fontSize:'0.95rem', lineHeight:1.7, margin:'0 0 28px', maxWidth:'32ch' }}>
+                Get a free, no-obligation quote today. We respond within 24 hours.
+              </p>
+              <button onClick={() => setQuoteOpen(true)}
+                style={{ display:'inline-flex', alignItems:'center', gap:8, background:'white', color:RED, border:'none', padding:'13px 26px', borderRadius:9, fontWeight:700, fontSize:'0.92rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', boxShadow:'0 8px 24px rgba(0,0,0,0.2)', transition:'transform 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
+                onMouseLeave={e => e.currentTarget.style.transform='none'}>
+                Request Free Quote <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+          <div style={{ background:`linear-gradient(135deg, ${NAVY}, #0f1340)`, padding:'64px 48px', display:'flex', flexDirection:'column', justifyContent:'center', position:'relative', overflow:'hidden' }}>
+            <div style={{ position:'absolute', top:-60, right:-60, width:220, height:220, borderRadius:'50%', background:'rgba(204,31,31,0.12)' }} />
+            <div style={{ position:'relative', zIndex:1 }}>
+              <div style={{ fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(255,255,255,0.5)', marginBottom:12 }}>Instant Response</div>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight:700, color:'white', lineHeight:1.1, margin:'0 0 16px' }}>
+                Chat With Us<br /><em style={{ color:RED }}>Right Now</em>
+              </h2>
+              <p style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.95rem', lineHeight:1.7, margin:'0 0 28px', maxWidth:'32ch' }}>
+                Prefer to talk? Reach us directly on WhatsApp — fast, easy, no waiting.
+              </p>
+              <a href={WA_HREF} target="_blank" rel="noopener noreferrer"
+                style={{ display:'inline-flex', alignItems:'center', gap:10, background:'#25D366', color:'white', padding:'13px 26px', borderRadius:9, fontWeight:700, fontSize:'0.92rem', textDecoration:'none', boxShadow:'0 8px 24px rgba(37,211,102,0.35)', transition:'transform 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
+                onMouseLeave={e => e.currentTarget.style.transform='none'}>
+                <WhatsAppIcon size={20} /> WhatsApp Us
+              </a>
+            </div>
           </div>
         </div>
+        <style>{`.cta-split { } @media (max-width: 768px) { .cta-split { grid-template-columns: 1fr !important; } }`}</style>
       </section>
 
       {/* ══════════════════ CONTACT ══════════════════ */}
-      <section id="contact" style={{ background:CREAM, padding:'88px 0' }}>
+      <section id="contact" style={{ background:'white', padding:'88px 0 0' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px' }}>
-          <div className="scroll-reveal" style={{ marginBottom:48, textAlign:'center' }}>
+
+          {/* Header */}
+          <div className="scroll-reveal" style={{ marginBottom:56, textAlign:'center' }}>
             <div style={{ display:'inline-block', background:`${RED}12`, border:`1px solid ${RED}30`, borderRadius:40, padding:'5px 16px', marginBottom:16 }}>
               <span style={{ color:RED, fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase' }}>Get in Touch</span>
             </div>
-            <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 4vw, 3rem)', fontWeight:700, color:NAVY }}>
-              We're Here to Help
+            <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 4vw, 3rem)', fontWeight:700, color:NAVY, margin:'0 0 10px' }}>
+              We're Here to <em style={{ color:RED }}>Help</em>
             </h2>
+            <p style={{ color:'#64748b', fontSize:'0.95rem', maxWidth:'42ch', margin:'0 auto' }}>
+              Reach out any way you prefer — we make it easy to get covered.
+            </p>
           </div>
 
-          <div className="contact-grid scroll-reveal" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:24 }}>
-            <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-              {[
-                { icon:Phone, label:'Phone / WhatsApp', value:'+267 744 48102', href:'tel:+26774448102', note:'Mon–Fri, 8am–5pm' },
-                { icon:Mail, label:'Email', value:'info@alfafirstprojects.co.bw', href:'mailto:info@alfafirstprojects.co.bw', note:'We reply within 24 hours' },
-                { icon:MapPin, label:'Location', value:'Gaborone, Botswana', href:'#', note:'Serving clients nationwide' },
-              ].map(c => {
-                const Icon = c.icon;
-                return (
-                  <a key={c.label} href={c.href}
-                    style={{ background:'white', borderRadius:12, padding:'22px 24px', display:'flex', alignItems:'flex-start', gap:16, textDecoration:'none', border:'1px solid rgba(26,31,94,0.08)', transition:'transform 0.2s, box-shadow 0.2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='translateX(4px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(26,31,94,0.1)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='none'; }}>
-                    <div style={{ width:44, height:44, borderRadius:10, background:`${NAVY}0d`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                      <Icon size={18} style={{ color:NAVY }} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:RED, marginBottom:3 }}>{c.label}</div>
-                      <div style={{ fontWeight:600, color:NAVY, fontSize:'0.95rem', marginBottom:2 }}>{c.value}</div>
-                      <div style={{ fontSize:'0.8rem', color:'#94a3b8' }}>{c.note}</div>
-                    </div>
+          {/* 3 contact cards top */}
+          <div className="scroll-reveal" style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:20, marginBottom:40 }} id="contact-cards">
+            {[
+              { icon:Phone, label:'Call or WhatsApp', value:'+267 744 48102', note:'Mon – Fri, 8am – 5pm', href:'tel:+26774448102', accent:RED },
+              { icon:Mail, label:'Email Us', value:'info@alfafirstprojects.co.bw', note:'Reply within 24 hours', href:'mailto:info@alfafirstprojects.co.bw', accent:NAVY },
+              { icon:MapPin, label:'Our Location', value:'Gaborone, Botswana', note:'Serving clients nationwide', href:'#', accent:RED },
+            ].map(c => {
+              const Icon = c.icon;
+              return (
+                <a key={c.label} href={c.href}
+                  style={{ background:CREAM, borderRadius:16, padding:'28px 24px', display:'flex', flexDirection:'column', gap:12, textDecoration:'none', border:`1px solid rgba(26,31,94,0.07)`, transition:'transform 0.25s, box-shadow 0.25s', position:'relative', overflow:'hidden' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-4px)'; e.currentTarget.style.boxShadow='0 16px 40px rgba(26,31,94,0.12)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='none'; }}>
+                  <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg, ${c.accent}, ${c.accent}88)`, borderRadius:'16px 16px 0 0' }} />
+                  <div style={{ width:46, height:46, borderRadius:12, background:c.accent === RED ? `${RED}15` : `${NAVY}12`, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <Icon size={20} style={{ color:c.accent }} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.15em', textTransform:'uppercase', color:c.accent, marginBottom:4 }}>{c.label}</div>
+                    <div style={{ fontWeight:700, color:NAVY, fontSize:'0.92rem', marginBottom:3, wordBreak:'break-word' }}>{c.value}</div>
+                    <div style={{ fontSize:'0.78rem', color:'#94a3b8' }}>{c.note}</div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+          <style>{`@media (max-width: 768px) { #contact-cards { grid-template-columns: 1fr !important; } }`}</style>
+
+          {/* Bottom: hours + form */}
+          <div className="contact-grid scroll-reveal" style={{ display:'grid', gridTemplateColumns:'1fr 2fr', gap:24, alignItems:'start' }}>
+
+            {/* Hours card */}
+            <div style={{ background:`linear-gradient(160deg, ${NAVY} 0%, #0f1340 100%)`, borderRadius:16, padding:'32px 28px', position:'relative', overflow:'hidden' }}>
+              <div style={{ position:'absolute', bottom:-40, right:-40, width:160, height:160, borderRadius:'50%', background:`${RED}18` }} />
+              <div style={{ position:'relative', zIndex:1 }}>
+                <Clock size={22} style={{ color:RED, marginBottom:16 }} />
+                <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.4rem', fontWeight:700, color:'white', marginBottom:20 }}>Business Hours</h3>
+                <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', paddingBottom:14, borderBottom:'1px solid rgba(255,255,255,0.08)' }}>
+                    <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'0.88rem' }}>Monday – Friday</span>
+                    <span style={{ color:'white', fontWeight:700, fontSize:'0.88rem' }}>8am – 5pm</span>
+                  </div>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', paddingBottom:14, borderBottom:'1px solid rgba(255,255,255,0.08)' }}>
+                    <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'0.88rem' }}>Saturday</span>
+                    <span style={{ color:GOLD, fontWeight:700, fontSize:'0.88rem' }}>By appt.</span>
+                  </div>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                    <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'0.88rem' }}>Sunday</span>
+                    <span style={{ color:'rgba(255,255,255,0.35)', fontWeight:600, fontSize:'0.88rem' }}>Closed</span>
+                  </div>
+                </div>
+                <div style={{ marginTop:28, paddingTop:20, borderTop:'1px solid rgba(255,255,255,0.08)' }}>
+                  <a href={WA_HREF} target="_blank" rel="noopener noreferrer"
+                    style={{ display:'flex', alignItems:'center', gap:8, background:'#25D366', color:'white', padding:'11px 18px', borderRadius:8, fontSize:'0.85rem', fontWeight:700, textDecoration:'none', justifyContent:'center' }}>
+                    <WhatsAppIcon size={16} /> Chat on WhatsApp
                   </a>
-                );
-              })}
-              <div style={{ background:NAVY, borderRadius:12, padding:'22px 24px', border:`1px solid ${NAVY}` }}>
-                <div style={{ color:RED, fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase', marginBottom:8 }}>Business Hours</div>
-                <div style={{ color:'white', fontWeight:600, marginBottom:4 }}>Monday – Friday</div>
-                <div style={{ color:'rgba(255,255,255,0.7)', fontSize:'0.9rem', marginBottom:12 }}>8:00 AM – 5:00 PM</div>
-                <div style={{ color:'rgba(255,255,255,0.45)', fontSize:'0.8rem' }}>Saturdays by appointment</div>
+                </div>
               </div>
             </div>
 
-            <div style={{ background:'white', borderRadius:16, padding:'32px 28px', border:'1px solid rgba(26,31,94,0.08)', boxShadow:'0 8px 32px rgba(26,31,94,0.06)' }}>
-              <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.5rem', fontWeight:700, color:NAVY, marginBottom:6 }}>Request a Quote</h3>
-              <p style={{ color:'#94a3b8', fontSize:'0.85rem', marginBottom:24 }}>Fill in your details and we'll get back to you promptly.</p>
-              <form onSubmit={handleQuoteSubmit} style={{ display:'flex', flexDirection:'column', gap:14 }}>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
-                  {[{id:'name',label:'Name *',type:'text',placeholder:'John Doe',required:true},{id:'phone',label:'Phone *',type:'tel',placeholder:'+267 744 48102',required:true}].map(f => (
+            {/* Quote form */}
+            <div style={{ background:CREAM, borderRadius:16, padding:'36px 32px', border:'1px solid rgba(26,31,94,0.07)' }}>
+              <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.6rem', fontWeight:700, color:NAVY, marginBottom:4 }}>Request a Quote</h3>
+              <p style={{ color:'#94a3b8', fontSize:'0.85rem', marginBottom:28 }}>Fill in your details and we'll get back to you promptly.</p>
+              <form onSubmit={handleQuoteSubmit} style={{ display:'flex', flexDirection:'column', gap:16 }}>
+                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+                  {[{id:'name',label:'Full Name *',type:'text',placeholder:'John Doe',required:true},{id:'phone',label:'Phone *',type:'tel',placeholder:'+267 744 48102',required:true}].map(f => (
                     <div key={f.id}>
-                      <label style={{ display:'block', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:5 }}>{f.label}</label>
+                      <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>{f.label}</label>
                       <input type={f.type} required={f.required} placeholder={f.placeholder} value={form[f.id]}
                         onChange={e => setForm(p => ({...p, [f.id]: e.target.value}))}
-                        style={{ width:'100%', padding:'10px 12px', borderRadius:7, border:'1.5px solid #e2e8f0', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', boxSizing:'border-box' }}
+                        style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e8edf5', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', boxSizing:'border-box', background:'white', transition:'border 0.2s' }}
                         onFocus={e => e.target.style.borderColor = NAVY}
-                        onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+                        onBlur={e => e.target.style.borderColor = '#e8edf5'}
                       />
                     </div>
                   ))}
                 </div>
-                <div>
-                  <label style={{ display:'block', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:5 }}>Email</label>
-                  <input type="email" placeholder="john@example.com" value={form.email}
-                    onChange={e => setForm(p => ({...p, email: e.target.value}))}
-                    style={{ width:'100%', padding:'10px 12px', borderRadius:7, border:'1.5px solid #e2e8f0', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', boxSizing:'border-box' }}
-                  />
+                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+                  <div>
+                    <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Email</label>
+                    <input type="email" placeholder="john@example.com" value={form.email}
+                      onChange={e => setForm(p => ({...p, email: e.target.value}))}
+                      style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e8edf5', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', boxSizing:'border-box', background:'white', transition:'border 0.2s' }}
+                      onFocus={e => e.target.style.borderColor = NAVY}
+                      onBlur={e => e.target.style.borderColor = '#e8edf5'}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Type of Cover</label>
+                    <select value={form.service} onChange={e => setForm(p => ({...p, service: e.target.value}))}
+                      style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e8edf5', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', background:'white', boxSizing:'border-box' }}>
+                      <option value="">Select service</option>
+                      {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
+                    </select>
+                  </div>
                 </div>
                 <div>
-                  <label style={{ display:'block', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:5 }}>Type of Cover</label>
-                  <select value={form.service} onChange={e => setForm(p => ({...p, service: e.target.value}))}
-                    style={{ width:'100%', padding:'10px 12px', borderRadius:7, border:'1.5px solid #e2e8f0', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', background:'white', boxSizing:'border-box' }}>
-                    <option value="">Select service</option>
-                    {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display:'block', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:NAVY, marginBottom:5 }}>Message</label>
-                  <textarea rows={3} placeholder="Any additional details..." value={form.message}
+                  <label style={{ display:'block', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:NAVY, marginBottom:6 }}>Message</label>
+                  <textarea rows={3} placeholder="Tell us what you need..." value={form.message}
                     onChange={e => setForm(p => ({...p, message: e.target.value}))}
-                    style={{ width:'100%', padding:'10px 12px', borderRadius:7, border:'1.5px solid #e2e8f0', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', resize:'none', boxSizing:'border-box' }}
+                    style={{ width:'100%', padding:'11px 14px', borderRadius:8, border:'2px solid #e8edf5', fontSize:'0.88rem', fontFamily:'DM Sans, sans-serif', outline:'none', resize:'none', boxSizing:'border-box', background:'white' }}
                   />
                 </div>
                 <button type="submit"
-                  style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:13, borderRadius:9, fontWeight:700, fontSize:'0.92rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', display:'flex', alignItems:'center', justifyContent:'center', gap:8, boxShadow:`0 6px 20px ${RED}35` }}>
-                  <WhatsAppIcon size={17} /> Send via WhatsApp
+                  style={{ background:`linear-gradient(135deg, ${RED}, ${RED_DARK})`, color:'white', border:'none', padding:'14px', borderRadius:10, fontWeight:700, fontSize:'0.95rem', cursor:'pointer', fontFamily:'DM Sans, sans-serif', display:'flex', alignItems:'center', justifyContent:'center', gap:9, boxShadow:`0 8px 24px ${RED}35`, transition:'transform 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
+                  onMouseLeave={e => e.currentTarget.style.transform='none'}>
+                  <WhatsAppIcon size={18} /> Send via WhatsApp
                 </button>
               </form>
             </div>
@@ -591,69 +640,107 @@ export default function AlfaFirstPage() {
       </section>
 
       {/* ══════════════════ FOOTER ══════════════════ */}
-      <footer style={{ background:NAVY, color:'white', padding:'56px 24px 32px' }}>
-        <div style={{ maxWidth:1200, margin:'0 auto' }}>
-          <div className="footer-grid" style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr', gap:40, marginBottom:48 }}>
+      <footer style={{ background:`linear-gradient(170deg, #0d1140 0%, ${NAVY} 60%, #111640 100%)`, color:'white', padding:'64px 24px 0', position:'relative', overflow:'hidden' }}>
+
+        {/* Decorative top accent line */}
+        <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg, transparent, ${RED}, ${GOLD}, ${RED}, transparent)` }} />
+        <div style={{ position:'absolute', top:-100, right:-100, width:400, height:400, borderRadius:'50%', background:`${RED}08`, pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:60, left:-80, width:300, height:300, borderRadius:'50%', background:`${NAVY}40`, pointerEvents:'none' }} />
+
+        <div style={{ maxWidth:1200, margin:'0 auto', position:'relative', zIndex:1 }}>
+
+          {/* Top: brand + 3 cols */}
+          <div className="footer-grid" style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1.2fr', gap:48, paddingBottom:48, borderBottom:'1px solid rgba(255,255,255,0.07)' }}>
+
+            {/* Brand */}
             <div>
-              <div style={{ marginBottom:8 }}>
-                <div style={{ fontFamily:'Cormorant Garamond, serif', fontWeight:700, fontSize:'1.4rem', color:'white', letterSpacing:'0.04em', textTransform:'uppercase' }}>
-                  ALFA F<span style={{ color:RED }}>I</span>RST PROJECTS
+              <div style={{ marginBottom:16 }}>
+                <div style={{ fontFamily:'Cormorant Garamond, serif', fontWeight:700, fontSize:'1.5rem', color:'white', letterSpacing:'0.05em', textTransform:'uppercase', lineHeight:1.1 }}>
+                  ALFA F<span style={{ color:RED }}>I</span>RST<br/>PROJECTS
                 </div>
-                <div style={{ fontSize:'0.6rem', color:RED, fontWeight:700, letterSpacing:'0.22em', textTransform:'uppercase' }}>"The Ultimate Choice"</div>
+                <div style={{ fontSize:'0.6rem', color:GOLD, fontWeight:700, letterSpacing:'0.24em', textTransform:'uppercase', marginTop:4 }}>"The Ultimate Choice"</div>
               </div>
-              <p style={{ color:'rgba(255,255,255,0.5)', fontSize:'0.88rem', lineHeight:1.7, marginBottom:20, maxWidth:'30ch' }}>
-                Long term & short term insurance solutions. Licensed by NBFIRA.
+              <p style={{ color:'rgba(255,255,255,0.45)', fontSize:'0.86rem', lineHeight:1.8, marginBottom:24, maxWidth:'28ch' }}>
+                Independent insurance brokerage. Long term &amp; short term solutions. Licensed by NBFIRA.
               </p>
-              <a href={WA_HREF} target="_blank" rel="noopener noreferrer"
-                style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#25D366', color:'white', padding:'9px 18px', borderRadius:8, fontSize:'0.85rem', fontWeight:700, textDecoration:'none' }}>
-                <WhatsAppIcon size={16} /> WhatsApp Us
-              </a>
-            </div>
-
-            <div>
-              <h4 style={{ fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase', color:RED, marginBottom:20 }}>Services</h4>
-              {SERVICES.map(s => (
-                <div key={s.title} style={{ color:'rgba(255,255,255,0.55)', fontSize:'0.88rem', marginBottom:10, cursor:'pointer' }}
-                  onClick={() => smoothScroll('services')}>
-                  {s.title}
-                </div>
-              ))}
-            </div>
-
-            <div>
-              <h4 style={{ fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase', color:RED, marginBottom:20 }}>Quick Links</h4>
-              {[['home','Home'],['services','Services'],['about','About Us'],['contact','Contact']].map(([id, label]) => (
-                <div key={id} style={{ color:'rgba(255,255,255,0.55)', fontSize:'0.88rem', marginBottom:10, cursor:'pointer' }}
-                  onClick={() => smoothScroll(id)}>
-                  {label}
-                </div>
-              ))}
-            </div>
-
-            <div>
-              <h4 style={{ fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase', color:RED, marginBottom:20 }}>Contact</h4>
-              <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-                <a href="tel:+26774448102" style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.88rem', textDecoration:'none', display:'flex', alignItems:'center', gap:8 }}>
-                  <Phone size={13} style={{ color:RED }} /> +267 744 48102
+              <div style={{ display:'flex', gap:10 }}>
+                <a href={WA_HREF} target="_blank" rel="noopener noreferrer"
+                  style={{ display:'inline-flex', alignItems:'center', gap:7, background:'#25D366', color:'white', padding:'9px 16px', borderRadius:8, fontSize:'0.82rem', fontWeight:700, textDecoration:'none', transition:'transform 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
+                  onMouseLeave={e => e.currentTarget.style.transform='none'}>
+                  <WhatsAppIcon size={15} /> WhatsApp
                 </a>
-                <a href="mailto:info@alfafirstprojects.co.bw" style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.88rem', textDecoration:'none', display:'flex', alignItems:'center', gap:8 }}>
-                  <Mail size={13} style={{ color:RED }} /> info@alfafirstprojects.co.bw
+                <a href="tel:+26774448102"
+                  style={{ display:'inline-flex', alignItems:'center', gap:7, background:'rgba(255,255,255,0.08)', color:'white', padding:'9px 16px', borderRadius:8, fontSize:'0.82rem', fontWeight:600, textDecoration:'none', border:'1px solid rgba(255,255,255,0.12)', transition:'background 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.14)'}
+                  onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,0.08)'}>
+                  <Phone size={13} /> Call Us
                 </a>
-                <div style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.88rem', display:'flex', alignItems:'flex-start', gap:8 }}>
+              </div>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h4 style={{ fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase', color:RED, marginBottom:20, paddingBottom:10, borderBottom:'1px solid rgba(255,255,255,0.06)' }}>Services</h4>
+              <div style={{ display:'flex', flexDirection:'column', gap:9 }}>
+                {SERVICES.map(s => (
+                  <button key={s.title}
+                    onClick={() => smoothScroll('services')}
+                    style={{ background:'none', border:'none', textAlign:'left', color:'rgba(255,255,255,0.5)', fontSize:'0.86rem', cursor:'pointer', padding:0, fontFamily:'DM Sans, sans-serif', transition:'color 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.color='white'}
+                    onMouseLeave={e => e.currentTarget.style.color='rgba(255,255,255,0.5)'}>
+                    {s.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 style={{ fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase', color:RED, marginBottom:20, paddingBottom:10, borderBottom:'1px solid rgba(255,255,255,0.06)' }}>Navigate</h4>
+              <div style={{ display:'flex', flexDirection:'column', gap:9 }}>
+                {[['home','Home'],['services','Services'],['about','About Us'],['contact','Contact']].map(([id, label]) => (
+                  <button key={id}
+                    onClick={() => smoothScroll(id)}
+                    style={{ background:'none', border:'none', textAlign:'left', color:'rgba(255,255,255,0.5)', fontSize:'0.86rem', cursor:'pointer', padding:0, fontFamily:'DM Sans, sans-serif', transition:'color 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.color='white'}
+                    onMouseLeave={e => e.currentTarget.style.color='rgba(255,255,255,0.5)'}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 style={{ fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase', color:RED, marginBottom:20, paddingBottom:10, borderBottom:'1px solid rgba(255,255,255,0.06)' }}>Contact</h4>
+              <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
+                <a href="tel:+26774448102" style={{ color:'rgba(255,255,255,0.55)', fontSize:'0.86rem', textDecoration:'none', display:'flex', alignItems:'flex-start', gap:9, transition:'color 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.color='white'}
+                  onMouseLeave={e => e.currentTarget.style.color='rgba(255,255,255,0.55)'}>
+                  <Phone size={13} style={{ color:RED, flexShrink:0, marginTop:2 }} /> +267 744 48102
+                </a>
+                <a href="mailto:info@alfafirstprojects.co.bw" style={{ color:'rgba(255,255,255,0.55)', fontSize:'0.86rem', textDecoration:'none', display:'flex', alignItems:'flex-start', gap:9, transition:'color 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.color='white'}
+                  onMouseLeave={e => e.currentTarget.style.color='rgba(255,255,255,0.55)'}>
+                  <Mail size={13} style={{ color:RED, flexShrink:0, marginTop:2 }} /> info@alfafirstprojects.co.bw
+                </a>
+                <div style={{ color:'rgba(255,255,255,0.55)', fontSize:'0.86rem', display:'flex', alignItems:'flex-start', gap:9 }}>
                   <MapPin size={13} style={{ color:RED, flexShrink:0, marginTop:2 }} /> Gaborone, Botswana
                 </div>
               </div>
             </div>
           </div>
 
-          <div style={{ borderTop:'1px solid rgba(255,255,255,0.1)', paddingTop:24, display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
-            <p style={{ color:'rgba(255,255,255,0.35)', fontSize:'0.8rem', margin:0 }}>
-              © 2026 Alfa First Projects. Licensed by NBFIRA. All rights reserved.
+          {/* Bottom bar */}
+          <div style={{ padding:'20px 0 24px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
+            <p style={{ color:'rgba(255,255,255,0.25)', fontSize:'0.78rem', margin:0 }}>
+              © 2026 Alfa First Projects (Pty) Ltd. Licensed by NBFIRA. All rights reserved.
             </p>
-            <p style={{ color:'rgba(255,255,255,0.35)', fontSize:'0.8rem', margin:0 }}>
-              Made with ❤️ by{' '}
+            <p style={{ color:'rgba(255,255,255,0.25)', fontSize:'0.78rem', margin:0 }}>
+              Built by{' '}
               <a href="https://bitroot-dev.vercel.app" target="_blank" rel="noopener noreferrer"
-                style={{ color:RED, textDecoration:'none', fontWeight:700 }}>
+                style={{ color:GOLD, textDecoration:'none', fontWeight:700 }}>
                 BITROOT
               </a>
             </p>
