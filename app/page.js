@@ -41,7 +41,6 @@ export default function AlfaFirstPage() {
   const [expandedService, setExpandedService] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' });
-  const [activeTab, setActiveTab] = useState('all');
   const [topBarHeight, setTopBarHeight] = useState(37);
   const topBarRef = useRef(null);
 
@@ -126,10 +125,6 @@ export default function AlfaFirstPage() {
     setQuoteOpen(false);
     setForm({ name: '', phone: '', email: '', service: '', message: '' });
   };
-
-  const filteredServices = activeTab === 'all'
-    ? SERVICES
-    : SERVICES.filter(s => s.short.toLowerCase().includes(activeTab));
 
   return (
     <div style={{ background: '#ffffff', fontFamily: "'DM Sans', sans-serif" }}>
@@ -352,63 +347,70 @@ export default function AlfaFirstPage() {
       </section>
 
       {/* ══════════════════ SERVICES ══════════════════ */}
-      <section id="services" style={{ background:CREAM, padding:'80px 0 96px' }}>
+      <section id="services" style={{ background:CREAM, padding:'88px 0 100px' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px' }}>
-          <div className="scroll-reveal" style={{ marginBottom:48 }}>
+
+          {/* Header */}
+          <div className="scroll-reveal" style={{ marginBottom:56, textAlign:'center' }}>
             <div style={{ display:'inline-block', background:`${RED}12`, border:`1px solid ${RED}30`, borderRadius:40, padding:'5px 16px', marginBottom:16 }}>
               <span style={{ color:RED, fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase' }}>What We Offer</span>
             </div>
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:16 }}>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 4vw, 3rem)', fontWeight:700, color:NAVY, margin:0, lineHeight:1.1 }}>
-                Complete Insurance<br /><em style={{ color:RED }}>Solutions</em>
-              </h2>
-              <div style={{ display:'flex', gap:8 }}>
-                {[['all','All Services'],['long','Long Term'],['short','Short Term']].map(([val, label]) => (
-                  <button key={val} onClick={() => setActiveTab(val)}
-                    className={`tab-btn${activeTab === val ? ' active' : ''}`}
-                    style={{ padding:'7px 16px', borderRadius:40, fontSize:'0.78rem', fontWeight:600, border:`1px solid ${activeTab === val ? NAVY : 'rgba(26,31,94,0.2)'}`, background:activeTab === val ? NAVY : 'white', color:activeTab === val ? 'white' : NAVY, cursor:'pointer', fontFamily:'DM Sans, sans-serif' }}>
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'clamp(2rem, 4vw, 3rem)', fontWeight:700, color:NAVY, margin:'0 0 12px', lineHeight:1.1 }}>
+              Complete Insurance <em style={{ color:RED }}>Solutions</em>
+            </h2>
+            <p style={{ color:'#64748b', fontSize:'0.95rem', maxWidth:'44ch', margin:'0 auto' }}>
+              Long term and short term cover for individuals, families and businesses across Botswana.
+            </p>
           </div>
 
-          <div className="services-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:20 }}>
-            {filteredServices.map((s, i) => {
+          <div className="services-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:24 }}>
+            {SERVICES.map((s, i) => {
               const Icon = s.icon;
               const isExpanded = expandedService === s.title;
+              const isRed = s.color === RED;
               return (
-                <div key={s.title} className="service-card scroll-reveal" style={{ background:'white', borderRadius:14, overflow:'hidden', border:'1px solid rgba(26,31,94,0.07)', transitionDelay:`${i * 0.05}s` }}>
-                  <div style={{ height:4, background:`linear-gradient(90deg, ${s.color}, ${s.color}70)` }} />
-                  <div style={{ padding:'28px 24px 20px' }}>
-                    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16 }}>
-                      <div style={{ width:44, height:44, borderRadius:10, background:`${s.color}12`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                        <Icon size={20} style={{ color:s.color }} />
-                      </div>
-                      <span style={{ background:s.color === RED ? `${RED}12` : `${NAVY}10`, color:s.color, fontSize:'0.62rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', padding:'3px 10px', borderRadius:40, border:`1px solid ${s.color}30` }}>
-                        {s.short}
-                      </span>
+                <div key={s.title} className="service-card scroll-reveal" style={{ background:'white', borderRadius:16, overflow:'hidden', border:'1px solid rgba(26,31,94,0.07)', transitionDelay:`${i * 0.06}s`, display:'flex', flexDirection:'column' }}>
+                  {/* Colour band + icon */}
+                  <div style={{ background: isRed ? `linear-gradient(135deg, ${RED}18, ${RED}08)` : `linear-gradient(135deg, ${NAVY}12, ${NAVY}05)`, padding:'28px 24px 20px', display:'flex', alignItems:'center', gap:16, borderBottom:`1px solid ${isRed ? RED : NAVY}10` }}>
+                    <div style={{ width:52, height:52, borderRadius:14, background: isRed ? `${RED}18` : `${NAVY}14`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                      <Icon size={24} style={{ color: isRed ? RED : NAVY }} />
                     </div>
-                    <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.3rem', fontWeight:700, color:NAVY, marginBottom:10 }}>{s.title}</h3>
-                    <p style={{ fontSize:'0.88rem', color:'#64748b', lineHeight:1.7, marginBottom:16 }}>{s.desc}</p>
+                    <div>
+                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:'1.25rem', fontWeight:700, color:NAVY, margin:'0 0 2px' }}>{s.title}</h3>
+                      <span style={{ fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color: isRed ? RED : NAVY, opacity:0.7 }}>{s.short}</span>
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div style={{ padding:'20px 24px 24px', display:'flex', flexDirection:'column', flex:1 }}>
+                    <p style={{ fontSize:'0.88rem', color:'#64748b', lineHeight:1.72, marginBottom:16, flex:1 }}>{s.desc}</p>
+
+                    {/* Expandable features */}
                     <div style={{ maxHeight:isExpanded ? 200 : 0, overflow:'hidden', transition:'max-height 0.4s ease', marginBottom:isExpanded ? 16 : 0 }}>
-                      <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:8 }}>
+                      <div style={{ borderTop:`1px solid rgba(26,31,94,0.07)`, paddingTop:14, display:'flex', flexDirection:'column', gap:8 }}>
                         {s.features.map(f => (
-                          <li key={f} style={{ display:'flex', alignItems:'center', gap:8, fontSize:'0.84rem', color:'#475569' }}>
-                            <div style={{ width:5, height:5, borderRadius:'50%', background:s.color, flexShrink:0 }} />
+                          <div key={f} style={{ display:'flex', alignItems:'center', gap:9, fontSize:'0.83rem', color:'#475569' }}>
+                            <div style={{ width:18, height:18, borderRadius:'50%', background: isRed ? `${RED}15` : `${NAVY}10`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                              <CheckCircle size={11} style={{ color: isRed ? RED : NAVY }} />
+                            </div>
                             {f}
-                          </li>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
+
+                    {/* Actions */}
                     <div style={{ display:'flex', gap:8 }}>
                       <button onClick={() => setExpandedService(isExpanded ? null : s.title)}
-                        style={{ flex:1, background:'none', border:`1px solid rgba(26,31,94,0.15)`, borderRadius:8, padding:'9px 14px', fontSize:'0.8rem', fontWeight:600, color:NAVY, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:6, fontFamily:'DM Sans, sans-serif' }}>
-                        {isExpanded ? 'Less' : 'Details'} <ChevronDown size={14} style={{ transform:isExpanded ? 'rotate(180deg)' : 'none', transition:'transform 0.3s' }} />
+                        style={{ flex:1, background:'none', border:`1px solid rgba(26,31,94,0.13)`, borderRadius:9, padding:'9px 14px', fontSize:'0.8rem', fontWeight:600, color:NAVY, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:5, fontFamily:'DM Sans, sans-serif', transition:'background 0.2s' }}
+                        onMouseEnter={e => e.currentTarget.style.background='rgba(26,31,94,0.04)'}
+                        onMouseLeave={e => e.currentTarget.style.background='none'}>
+                        {isExpanded ? 'Less' : 'Details'} <ChevronDown size={13} style={{ transform:isExpanded ? 'rotate(180deg)' : 'none', transition:'transform 0.3s' }} />
                       </button>
                       <button onClick={() => { setForm(p => ({...p, service: s.title})); setQuoteOpen(true); }}
-                        style={{ flex:1, background:`linear-gradient(135deg, ${s.color}, ${s.color === RED ? RED_DARK : '#141850'})`, border:'none', borderRadius:8, padding:'9px 14px', fontSize:'0.8rem', fontWeight:700, color:'white', cursor:'pointer', fontFamily:'DM Sans, sans-serif' }}>
+                        style={{ flex:1, background:`linear-gradient(135deg, ${s.color}, ${isRed ? RED_DARK : '#141850'})`, border:'none', borderRadius:9, padding:'9px 14px', fontSize:'0.8rem', fontWeight:700, color:'white', cursor:'pointer', fontFamily:'DM Sans, sans-serif', boxShadow:`0 4px 14px ${s.color}30`, transition:'transform 0.2s' }}
+                        onMouseEnter={e => e.currentTarget.style.transform='translateY(-1px)'}
+                        onMouseLeave={e => e.currentTarget.style.transform='none'}>
                         Get Quote
                       </button>
                     </div>
